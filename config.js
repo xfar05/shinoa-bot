@@ -5,7 +5,7 @@ const config = {
   },
   owner: {
     name: "xfar",
-    number: ["62895619083555@s.whatsapp.net"],
+    number: ["6285864809039@s.whatsapp.net"],
   },
   session: "./src/session",
   self: true,
