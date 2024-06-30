@@ -74,7 +74,7 @@ Add to PATH environment variable
 4. Enter your pairing code into the WhatsApp linked device.
 
 ## Function/Command Config
-- You can see the example command code here [show](https://github.com/xfar05/shinoa-bot/command/general.js)
+- You can see the example command code here [show](https://github.com/xfar05/shinoa-bot/blob/main/command/general.js)
 ```js
 command.exec({
   name: String[],
@@ -95,7 +95,7 @@ command.exec({
   query: Boolean || String,
 })
 ```
-- You can see the example function code here [show](https://github.com/xfar05/shinoa-bot/command/_function.js)
+- You can see the example function code here [show](https://github.com/xfar05/shinoa-bot/blob/main/command/_function.js)
 ```js
 command.functions(String, async function(msg) {
 // your code
@@ -105,8 +105,8 @@ command.functions(String, async function(msg) {
 ## Usage
 
 - The bot will automatically respond to messages with predetermined replies with prefix symbols, emojis, or without prefixes.
-- Configuration file [config](https://github.com/xfar05/shinoa-bot/config.js)
-- You can customize the bot's response in the [command](https://github.com/xfar05/shinoa-bot/command) file.
+- Configuration file [config](https://github.com/xfar05/shinoa-bot/blob/main/config.js)
+- You can customize the bot's response in the [command](https://github.com/xfar05/shinoa-bot/blob/command) file.
 
 
 ## Contributing
