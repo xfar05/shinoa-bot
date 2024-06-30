@@ -47,15 +47,15 @@ command.functions("editMessage", async function (msg) {
     quoted = { key: msg.key, message: quoted }
   }
   const userJid = conn.user.jid
-	const messages = generateWAMessageFromContent(msg.from, message, { userJid, quoted })
-	messages.key.fromMe = msg.fromMe
-	messages.key.id = msg.key.id
-	messages.pushName = msg.pushname
-	if (msg.isGroup) messages.key.participant = messages.participant = msg.sender
-	conn.ev.emit('messages.upsert', {
+  const messages = generateWAMessageFromContent(msg.from, message, { userJid, quoted })
+  messages.key.fromMe = msg.fromMe
+  messages.key.id = msg.key.id
+  messages.pushName = msg.pushname
+  if (msg.isGroup) messages.key.participant = messages.participant = msg.sender
+  conn.ev.emit('messages.upsert', {
 	  messages: [messages],
 	  type: 'append'
-	})
+  })
 })
 
 command.functions("clear", async function (msg) {
