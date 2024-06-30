@@ -26,7 +26,7 @@ const config = {
   },
   api: {
     url: "https://api.xfar.net/api",
-    key: "x"
+    key: "your key"
   }
 }
 
