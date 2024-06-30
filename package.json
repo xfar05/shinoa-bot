@@ -1,0 +1,30 @@
+{
+  "name": "shinoa-bot",
+  "version": "1.0.0",
+  "description": "example for api.xfar.net",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bot",
+    "bot-wa",
+    "baileys",
+    "xfar"
+  ],
+  "author": "xfar",
+  "license": "MIT",
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.7.5",
+    "module-alias": "^2.2.3",
+    "moment-timezone": "^0.5.45",
+    "node-webpmux": "^3.2.0"
+  },
+  "_moduleAliases": {
+    "@database": "src/database/database.js",
+    "@event": "event",
+    "@utils": "src/utils",
+    "@config": "config.js"
+  }
+}
