@@ -38,9 +38,7 @@ command.exec({
   } catch(e) {
     msg.reply(util.format(e))
   }
-},{
-  owner:true
-})
+},{ owner:true })
 
 command.exec({
   name: "mode",
@@ -57,6 +55,4 @@ command.exec({
     config.self = false 
     await msg.reply('~ Public mode active')
   }
-},{
-  owner: true
-})
+},{ owner: true })
