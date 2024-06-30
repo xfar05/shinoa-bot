@@ -172,10 +172,10 @@ const start = {
     
     // Handle groups update
     conn.ev.on('groups.update', updates => {
-  	for (const update of updates) {
-  		const id = update.id;
-  		if (store.groupMetadata[id]) store.groupMetadata[id] = { ...(store.groupMetadata[id] || {}), ...(update || {}) };
-  	}
+  		for (const update of updates) {
+  			const id = update.id;
+  			if (store.groupMetadata[id]) store.groupMetadata[id] = { ...(store.groupMetadata[id] || {}), ...(update || {}) };
+  		}
     });
   },
   readCommand: async () => {
