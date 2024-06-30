@@ -174,11 +174,9 @@ const start = {
     conn.ev.on('groups.update', updates => {
   		for (const update of updates) {
   			const id = update.id;
-  			if (store.groupMetadata[id]) {
-  			  store.groupMetadata[id] = { ...(store.groupMetadata[id] || {}), ...(update || {}) };
-  			}
+  			if (store.groupMetadata[id]) store.groupMetadata[id] = { ...(store.groupMetadata[id] || {}), ...(update || {}) };
   		}
-  	});
+    });
   },
   readCommand: async () => {
     let commandFolder = path.resolve(__dirname, "..", "command");
