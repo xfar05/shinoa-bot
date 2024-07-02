@@ -177,9 +177,8 @@ async function serialize(msg) {
     } else if (emojiPrefix) {
       msg.prefix = emojiPrefix[0];
     }
-    msg.args = msg.body.replaceAll(msg.prefix, "").split(" ");
-    if (msg.args[0] === "") msg.args.shift();
-    msg.command = msg.args.shift() || "";
+    msg.args = msg.body.trim().toLowerCase().split(/ +/).slice(1);
+    msg.command = msg.body.toLowerCase().replaceAll(msg.prefix, "").split(" ")[0] || ""
     msg.text = msg.args.join(" ");
     msg.mentions = msg.message[msg.type]?.contextInfo?.mentionedJid || [];
     msg.expiration = msg.message[msg.type]?.contextInfo?.expiration || 0;
@@ -201,6 +200,7 @@ async function serialize(msg) {
       fromMe: msg.quoted.fromMe,
       remoteJid: msg.from,
     };
+    msg.quoted.isMedia = msg.typeCheck?.isQuotedImage || msg.typeCheck?.isQuotedVideo || msg.typeCheck?.isQuotedSticker || msg.typeCheck?.isQuotedProduct;
     msg.quoted.delete = () => conn.sendMessage(msg.from, { delete: { fromMe: msg.quoted.key.fromMe, id: msg.quoted.id, remoteJid: msg.from, participant: msg.quoted.sender } });
     msg.quoted.edit = (text) => conn.sendMessage(msg.from, { edit: msg.quoted.key, text });
     msg.quoted.download = (filename) => conn.downloadMedia(msg.quoted.message, filename);
@@ -229,22 +229,22 @@ async function serialize(msg) {
     }
   }
 
-  msg.isMedia = msg.typeCheck?.isImage || msg.typeCheck?.isVideo || msg.typeCheck?.isSticker;
-  msg.quoted.isMedia = msg.typeCheck?.isQuotedImage || msg.typeCheck?.isQuotedVideo || msg.typeCheck?.isQuotedSticker || msg.typeCheck?.isQuotedProduct;
-
-  msg.groupMetadata = msg.isGroup ? await conn.groupMetadata(msg.from) : null;
-  msg.groupName = msg.isGroup ? msg.groupMetadata.subject : null;
-  msg.admin = msg.isGroup ? msg.groupMetadata.participants.filter((adm) => adm.admin != null).map((adm) => adm.id) : null;
+  if (msg.isGroup) {
+    msg.groupMetadata = await conn.groupMetadata(msg.from) || {};
+    msg.groupName = msg.groupMetadata.subject || null;
+    msg.admin = msg.groupMetadata.participants.filter((adm) => adm.admin != null).map((adm) => adm.id) || [];
+    msg.isAdmin = msg.admin.includes(msg.sender) || msg.isOwner || false;
+    msg.isBotAdmin = msg.admin.includes(msg.botNumber) || false;
+  }
+  
   msg.isOwner = (msg.sender ? config.owner.number.includes(msg.sender) || msg.botNumber.includes(msg.sender) : false) || false;
-  msg.isAdmin = msg.isGroup ? msg.admin.includes(msg.sender) || msg.isOwner : false;
-  msg.isBotAdmin = msg.isGroup ? msg.admin.includes(msg.botNumber) : false;
-
+  msg.isMedia = msg.typeCheck?.isImage || msg.typeCheck?.isVideo || msg.typeCheck?.isSticker;
   msg.delete = () => conn.sendMessage(msg.from, { delete: { fromMe: msg.key.fromMe, id: msg.key.id, remoteJid: msg.from, participant: msg.sender } });
   msg.download = (filename) => conn.downloadMedia(msg.message, filename);
   msg.edit = (text) => conn.sendMessage(msg.from, { edit: msg.key, text });
   msg.reply = async (message, opt1 = {}, opt2 = {}) => {
     const prepared = typeof message === "string" ? { text: require("util").format(message) } : message;
-    const mentions = opt1.withTag ? (opt1.caption ? parseMention(opt1.caption) : (message ? parseMention(message) : [])) : [];
+    const mentions = opt1.withTag ? (opt1.caption ? await parseMention(opt1.caption) : (message ? await parseMention(message) : [])) : [];
     if (msg.key.fromMe && opt1.isEdit) {
       return await msg.edit(prepared);
     } else if (Buffer.isBuffer(message) && opt1.asSticker) {
