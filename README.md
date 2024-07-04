@@ -90,9 +90,10 @@ command.exec({
   private: Boolean,
   admin: Boolean,
   botadmin: Boolean,
+  query: Boolean || String,
+  url: Boolean || String,
   quoted: Boolean,
   wait: Boolean || String,
-  query: Boolean || String,
 })
 ```
 - You can see the example function code here [show](https://github.com/xfar05/shinoa-bot/blob/main/command/_function.js)
