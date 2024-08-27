@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://cdn.sazumi.moe/file/wlozpj.jpg" border="0" alt="shinoa">
+<img src="https://dikaardnt.com/file/33428e41a7e8.jpeg" border="0" alt="shinoa">
 
 ## Shinoa Bot
 </div>
